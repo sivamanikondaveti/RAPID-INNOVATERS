@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features - MarketMind AI</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-dark': '#0f172a',
+                        'brand-primary': '#6366f1',
+                        'brand-secondary': '#a855f7',
+                        'brand-accent': '#ec4899',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body
+    class="bg-brand-dark text-white overflow-x-hidden font-sans antialiased selection:bg-brand-primary selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0">
+                    <a href="index.html"
+                        class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-brand-primary to-brand-secondary">MarketMind</a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-center space-x-8">
+                        <a href="index.html"
+                            class="hover:text-brand-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="about.html"
+                            class="hover:text-brand-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
+                        <a href="features.html"
+                            class="hover:text-brand-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Features</a>
+                        <a href="dashboard.html"
+                            class="hover:text-brand-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Dashboard</a>
+
+                        <!-- Login Button / User Menu -->
+                        <div id="auth-container-desktop">
+                            <button id="login-btn-desktop"
+                                class="px-5 py-2 bg-white/10 border border-white/20 rounded-full hover:bg-white/20 hover:border-brand-primary transition-all text-sm font-semibold">
+                                Login
+                            </button>
+                            <!-- Profile Dropdown -->
+                            <div id="user-menu-desktop" class="hidden relative">
+                                <button id="profile-btn-desktop"
+                                    class="flex items-center gap-2 focus:outline-none group">
+                                    <div class="h-8 w-8 rounded-full bg-gradient-to-br from-brand-primary to-brand-secondary flex items-center justify-center text-white font-bold text-sm shadow-lg ring-2 ring-transparent group-hover:ring-brand-primary/50 transition-all"
+                                        id="user-avatar-desktop">
+                                        <!-- Initial inject here -->
+                                        U
+                                    </div>
+                                    <span
+                                        class="text-sm font-medium text-gray-200 group-hover:text-white transition-colors"
+                                        id="username-display-desktop">User</span>
+                                    <svg class="h-4 w-4 text-gray-400 group-hover:text-white transition-colors"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </button>
+
+                                <!-- Dropdown Menu -->
+                                <div id="profile-dropdown"
+                                    class="absolute right-0 mt-2 w-48 rounded-xl bg-[#0f172a] border border-white/10 shadow-2xl py-2 hidden origin-top-right transition-all transform opacity-0 scale-95 z-50">
+                                    <div class="px-4 py-3 border-b border-white/5">
+                                        <p class="text-xs text-gray-400">Signed in as</p>
+                                        <p class="text-sm font-bold text-white truncate" id="user-email-display">
+                                            user@example.com</p>
+                                    </div>
+                                    <a href="dashboard.html"
+                                        class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-brand-primary transition-colors">Dashboard</a>
+                                    <a href="#"
+                                        class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-brand-primary transition-colors">Settings</a>
+                                    <div class="border-t border-white/5 mt-1"></div>
+                                    <button id="logout-btn-desktop"
+                                        class="w-full text-left block px-4 py-2 text-sm text-red-400 hover:bg-white/5 hover:text-red-300 transition-colors">Sign
+                                        out</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" id="mobile-menu-btn"
+                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
+                        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden bg-brand-dark/95 backdrop-blur-md" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700">Home</a>
+                <a href="about.html"
+                    class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700">About</a>
+                <a href="features.html"
+                    class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700">Features</a>
+                <a href="dashboard.html"
+                    class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700">Dashboard</a>
+
+                <!-- Mobile Login -->
+                <div class="pt-4 pb-2 border-t border-gray-700 mt-2">
+                    <div id="auth-container-mobile" class="px-3">
+                        <button id="login-btn-mobile"
+                            class="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Login</button>
+                        <div id="user-menu-mobile" class="hidden px-3 py-2 space-y-3">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="h-8 w-8 rounded-full bg-gradient-to-br from-brand-primary to-brand-secondary flex items-center justify-center text-white font-bold text-xs shadow-lg"
+                                    id="user-avatar-mobile">U</div>
+                                <div>
+                                    <div class="text-sm font-medium text-white" id="username-display-mobile">User</div>
+                                    <div class="text-xs text-gray-400" id="user-email-mobile">user@example.com</div>
+                                </div>
+                            </div>
+                            <a href="dashboard.html" class="block text-sm text-gray-300 hover:text-white">Dashboard</a>
+                            <a href="#" class="block text-sm text-gray-300 hover:text-white">Settings</a>
+                            <button id="logout-btn-mobile"
+                                class="w-full text-left block text-sm text-red-400 hover:text-red-300">Sign out</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 3️⃣ Features Switcher Section -->
+    <section id="features-switcher" class="py-24 relative bg-gray-900/30 overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
+            <div
+                class="absolute top-[-10%] left-[-10%] w-1/2 h-1/2 bg-brand-primary/10 rounded-full blur-[120px] animate-pulse-slow">
+            </div>
+            <div
+                class="absolute bottom-[-10%] right-[-10%] w-1/2 h-1/2 bg-brand-secondary/10 rounded-full blur-[120px] animate-pulse-slow delay-700">
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in-section">
+                <h2
+                    class="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-brand-secondary to-brand-accent inline-block">
+                    Intelligence at Your Fingertips
+                </h2>
+                <p class="mt-4 text-gray-400 max-w-2xl mx-auto">
+                    Navigate through our powerful suite of AI-driven tools designed to give you the competitive edge.
+                </p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-12 items-start">
+                <!-- Left: Feature Navigation -->
+                <div class="w-full lg:w-1/3 flex flex-col gap-4 fade-in-section" id="feature-list">
+                    <!-- Feature 1 -->
+                    <button type="button"
+                        class="feature-item group p-6 rounded-xl border border-white/5 hover:bg-white/5 text-left transition-all duration-300 relative overflow-hidden active-feature bg-white/5 cursor-pointer"
+                        data-feature="market-research">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-brand-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        </div>
+                        <div
+                            class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary h-full transition-all duration-300 group-[.active-feature]:h-full feature-indicator">
+                        </div>
+                        <div class="relative z-10">
+                            <h3
+                                class="text-xl font-semibold text-white group-[.active-feature]:text-brand-primary transition-colors feature-title">
+                                AI Market Research</h3>
+                            <p class="text-sm text-gray-400 mt-2">Deep-dive analysis into global trends.</p>
+                        </div>
+                    </button>
+                    <!-- Feature 2 -->
+                    <button type="button"
+                        class="feature-item group p-6 rounded-xl border border-white/5 hover:bg-white/5 text-left transition-all duration-300 relative overflow-hidden cursor-pointer"
+                        data-feature="competitive-intel">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-brand-secondary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        </div>
+                        <div
+                            class="absolute left-0 top-0 bottom-0 w-1 bg-brand-secondary h-0 transition-all duration-300 group-[.active-feature]:h-full feature-indicator">
+                        </div>
+                        <div class="relative z-10">
+                            <h3
+                                class="text-xl font-semibold text-white group-[.active-feature]:text-brand-secondary transition-colors feature-title">
+                                Competitive Intel</h3>
+                            <p class="text-sm text-gray-400 mt-2">Real-time competitor tracking.</p>
+                        </div>
+                    </button>
+                    <!-- Feature 3 -->
+                    <button type="button"
+                        class="feature-item group p-6 rounded-xl border border-white/5 hover:bg-white/5 text-left transition-all duration-300 relative overflow-hidden cursor-pointer"
+                        data-feature="sentiment-analysis">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-brand-accent/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        </div>
+                        <div
+                            class="absolute left-0 top-0 bottom-0 w-1 bg-brand-accent h-0 transition-all duration-300 group-[.active-feature]:h-full feature-indicator">
+                        </div>
+                        <div class="relative z-10">
+                            <h3
+                                class="text-xl font-semibold text-white group-[.active-feature]:text-brand-accent transition-colors feature-title">
+                                Sentiment Analysis</h3>
+                            <p class="text-sm text-gray-400 mt-2">Understand customer emotions.</p>
+                        </div>
+                    </button>
+                    <!-- Feature 4 -->
+                    <button type="button"
+                        class="feature-item group p-6 rounded-xl border border-white/5 hover:bg-white/5 text-left transition-all duration-300 relative overflow-hidden cursor-pointer"
+                        data-feature="predictive-sales">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        </div>
+                        <div
+                            class="absolute left-0 top-0 bottom-0 w-1 bg-blue-400 h-0 transition-all duration-300 group-[.active-feature]:h-full feature-indicator">
+                        </div>
+                        <div class="relative z-10">
+                            <h3
+                                class="text-xl font-semibold text-white group-[.active-feature]:text-blue-400 transition-colors feature-title">
+                                Predictive Sales</h3>
+                            <p class="text-sm text-gray-400 mt-2">Forecast trends and leads.</p>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Right: Feature Preview -->
+                <div class="w-full lg:w-2/3 fade-in-section delay-200">
+                    <div class="relative h-full min-h-[500px] rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl p-8 overflow-hidden shadow-2xl shadow-brand-primary/5 transition-all duration-500"
+                        id="feature-preview-panel">
+                        <!-- Dynamic Content Container -->
+                        <div class="relative z-10 h-full flex flex-col justify-between" id="preview-content">
+                            <!-- Header -->
+                            <div class="mb-8">
+                                <div class="inline-flex items-center justify-center p-3 rounded-lg bg-brand-primary/20 text-brand-primary mb-4 transition-colors duration-300"
+                                    id="preview-icon">
+                                    <!-- Icon SVG -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                    </svg>
+                                </div>
+                                <h3 class="text-3xl font-bold text-white mb-2" id="preview-title">AI Market Research
+                                </h3>
+                                <p class="text-gray-300 text-lg leading-relaxed max-w-2xl" id="preview-desc">
+                                    Automated deep-dive analysis into global market trends and emerging opportunities.
+                                    Our algorithms process millions of data points to give you a clear picture of where
+                                    the market is heading.
+                                </p>
+                            </div>
+
+                            <!-- Mini Insight Simulation -->
+                            <div
+                                class="bg-white/5 rounded-xl border border-white/10 p-6 backdrop-blur-md relative overflow-hidden group hover:border-brand-primary/30 transition-colors">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h4 class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Live
+                                        Simulation</h4>
+                                    <span
+                                        class="px-2 py-1 rounded bg-green-500/10 text-green-400 text-[10px] font-bold border border-green-500/20"
+                                        id="preview-status">ACTIVE</span>
+                                </div>
+                                <!-- Mock Visualization -->
+                                <div class="flex gap-4 items-end h-32 mb-4" id="preview-chart">
+                                    <!-- Bars injected via JS -->
+                                    <div
+                                        class="flex-1 bg-brand-primary/50 rounded-t-sm h-1/2 transition-all duration-500">
+                                    </div>
+                                    <div
+                                        class="flex-1 bg-brand-primary/50 rounded-t-sm h-3/4 transition-all duration-500 delay-75">
+                                    </div>
+                                    <div
+                                        class="flex-1 bg-brand-primary/50 rounded-t-sm h-2/3 transition-all duration-500 delay-100">
+                                    </div>
+                                    <div
+                                        class="flex-1 bg-brand-primary rounded-t-sm h-full transition-all duration-500 delay-150 shadow-[0_0_15px_rgba(99,102,241,0.5)]">
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center border-t border-white/10 pt-4">
+                                    <div>
+                                        <p class="text-xs text-gray-500">Detected Opportunity</p>
+                                        <p class="text-lg font-bold text-white mt-1" id="preview-kpi">+127% Growth</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-xs text-gray-500">Confidence</p>
+                                        <p class="text-lg font-bold text-brand-primary mt-1" id="preview-confidence">
+                                            98.2%</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Decorational Blurs -->
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-brand-primary/10 rounded-full blur-[80px] -z-10 transform translate-x-1/2 -translate-y-1/2 transition-colors duration-500"
+                            id="preview-glow">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4️⃣ AI Workflow Section (Replacing How It Works) -->
+    <section id="ai-workflow" class="py-24 bg-black relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20 fade-in-section">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">The Intelligence Engine</h2>
+                <p class="text-gray-400">How MarketMind transforms raw data into strategy.</p>
+            </div>
+
+            <div class="relative">
+                <!-- Connecting Line Container -->
+                <div class="hidden md:block absolute top-[24px] left-0 w-full h-[2px] bg-white/10 -z-0">
+                    <div class="h-full bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent w-0 transition-[width] duration-[2000ms] ease-linear"
+                        id="workflow-line"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+                    <!-- Step 1 -->
+                    <div class="workflow-step relative flex flex-col items-center text-center group fade-in-section"
+                        data-step="1">
+                        <div
+                            class="w-12 h-12 rounded-full border-2 border-white/10 bg-black flex items-center justify-center text-gray-500 mb-6 z-10 transition-all duration-500 group-hover:border-brand-primary group-hover:text-white group-hover:bg-brand-primary/20 group-hover:scale-110 shadow-[0_0_0_0_rgba(99,102,241,0)] group-hover:shadow-[0_0_20px_rgba(99,102,241,0.4)]">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                                </path>
+                            </svg>
+                        </div>
+                        <h4
+                            class="text-white font-semibold mb-2 opacity-50 transition-opacity duration-300 group-hover:opacity-100">
+                            Data Collection</h4>
+                        <p
+                            class="text-xs text-gray-500 opacity-0 transform translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                            Aggregating millions of signals.</p>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="workflow-step relative flex flex-col items-center text-center group fade-in-section delay-100"
+                        data-step="2">
+                        <div
+                            class="w-12 h-12 rounded-full border-2 border-white/10 bg-black flex items-center justify-center text-gray-500 mb-6 z-10 transition-all duration-500 group-hover:border-brand-secondary group-hover:text-white group-hover:bg-brand-secondary/20 group-hover:scale-110 shadow-[0_0_0_0_rgba(168,85,247,0)] group-hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h4
+                            class="text-white font-semibold mb-2 opacity-50 transition-opacity duration-300 group-hover:opacity-100">
+                            AI Processing</h4>
+                        <p
+                            class="text-xs text-gray-500 opacity-0 transform translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                            Cleaning & structuring data.</p>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="workflow-step relative flex flex-col items-center text-center group fade-in-section delay-200"
+                        data-step="3">
+                        <div
+                            class="w-12 h-12 rounded-full border-2 border-white/10 bg-black flex items-center justify-center text-gray-500 mb-6 z-10 transition-all duration-500 group-hover:border-brand-accent group-hover:text-white group-hover:bg-brand-accent/20 group-hover:scale-110 shadow-[0_0_0_0_rgba(236,72,153,0)] group-hover:shadow-[0_0_20px_rgba(236,72,153,0.4)]">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                        <h4
+                            class="text-white font-semibold mb-2 opacity-50 transition-opacity duration-300 group-hover:opacity-100">
+                            Pattern Detection</h4>
+                        <p
+                            class="text-xs text-gray-500 opacity-0 transform translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                            Identifying hidden correlations.</p>
+                    </div>
+                    <!-- Step 4 -->
+                    <div class="workflow-step relative flex flex-col items-center text-center group fade-in-section delay-300"
+                        data-step="4">
+                        <div
+                            class="w-12 h-12 rounded-full border-2 border-white/10 bg-black flex items-center justify-center text-gray-500 mb-6 z-10 transition-all duration-500 group-hover:border-purple-400 group-hover:text-white group-hover:bg-purple-400/20 group-hover:scale-110 shadow-[0_0_0_0_rgba(192,132,252,0)] group-hover:shadow-[0_0_20px_rgba(192,132,252,0.4)]">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <h4
+                            class="text-white font-semibold mb-2 opacity-50 transition-opacity duration-300 group-hover:opacity-100">
+                            Insight Generation</h4>
+                        <p
+                            class="text-xs text-gray-500 opacity-0 transform translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                            Actionable intelligence.</p>
+                    </div>
+                    <!-- Step 5 -->
+                    <div class="workflow-step relative flex flex-col items-center text-center group fade-in-section delay-400"
+                        data-step="5">
+                        <div
+                            class="w-12 h-12 rounded-full border-2 border-white/10 bg-black flex items-center justify-center text-gray-500 mb-6 z-10 transition-all duration-500 group-hover:border-green-400 group-hover:text-white group-hover:bg-green-400/20 group-hover:scale-110 shadow-[0_0_0_0_rgba(74,222,128,0)] group-hover:shadow-[0_0_20px_rgba(74,222,128,0.4)]">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h4
+                            class="text-white font-semibold mb-2 opacity-50 transition-opacity duration-300 group-hover:opacity-100">
+                            Strategy Output</h4>
+                        <p
+                            class="text-xs text-gray-500 opacity-0 transform translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                            Ready-to-execute plans.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7️⃣ Footer -->
+    <footer class="bg-black/40 border-t border-white/5 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="col-span-1 md:col-span-2">
+                    <span
+                        class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-brand-primary to-brand-secondary">MarketMind</span>
+                    <p class="mt-4 text-gray-500 max-w-sm">
+                        Empowering businesses with the next generation of AI-driven market intelligence.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Product</h4>
+                    <ul class="space-y-2 text-gray-500 text-sm">
+                        <li><a href="features.html" class="hover:text-brand-primary transition-colors">Features</a></li>
+                        <li><a href="#" class="hover:text-brand-primary transition-colors">Integration</a></li>
+                        <li><a href="#" class="hover:text-brand-primary transition-colors">Pricing</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2 text-gray-500 text-sm">
+                        <li><a href="about.html" class="hover:text-brand-primary transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-brand-primary transition-colors">Careers</a></li>
+                        <li><a href="#" class="hover:text-brand-primary transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div
+                class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-600">
+                <p>&copy; 2026 MarketMind AI. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white transition-colors">Twitter</a>
+                    <a href="#" class="hover:text-white transition-colors">LinkedIn</a>
+                    <a href="#" class="hover:text-white transition-colors">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="fixed inset-0 z-[100] hidden" aria-labelledby="modal-title" role="dialog"
+        aria-modal="true">
+        <!-- Backdrop -->
+        <div class="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity opacity-0" id="modal-backdrop"></div>
+
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+            <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+                <!-- Modal Panel -->
+                <div class="relative transform overflow-hidden rounded-2xl bg-[#0f172a] border border-white/10 text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-md opacity-0 scale-95"
+                    id="modal-panel">
+
+                    <!-- Close Button -->
+                    <div class="absolute top-0 right-0 pt-4 pr-4">
+                        <button type="button" id="close-modal-btn"
+                            class="rounded-md bg-transparent text-gray-400 hover:text-white focus:outline-none">
+                            <span class="sr-only">Close</span>
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="px-6 pb-6 pt-10 sm:p-8 sm:pb-8">
+                        <div
+                            class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand-primary/10 mb-6">
+                            <svg class="h-8 w-8 text-brand-primary" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                            </svg>
+                        </div>
+                        <div class="text-center">
+                            <h3 class="text-2xl font-bold leading-6 text-white mb-2" id="modal-title">Welcome Back</h3>
+                            <p class="text-sm text-gray-400">Sign in to access your dashboard</p>
+                        </div>
+
+                        <form class="mt-8 space-y-6" id="login-form">
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="email" class="sr-only">Email address</label>
+                                    <input id="email" name="email" type="email" autocomplete="email" required
+                                        class="relative block w-full rounded-lg border border-white/10 bg-black/20 px-4 py-3 text-white placeholder-gray-500 focus:z-10 focus:border-brand-primary focus:outline-none focus:ring-1 focus:ring-brand-primary sm:text-sm transition-colors"
+                                        placeholder="Email address">
+                                </div>
+                                <div>
+                                    <label for="password" class="sr-only">Password</label>
+                                    <input id="password" name="password" type="password" autocomplete="current-password"
+                                        required
+                                        class="relative block w-full rounded-lg border border-white/10 bg-black/20 px-4 py-3 text-white placeholder-gray-500 focus:z-10 focus:border-brand-primary focus:outline-none focus:ring-1 focus:ring-brand-primary sm:text-sm transition-colors"
+                                        placeholder="Password">
+                                </div>
+                            </div>
+
+                            <div>
+                                <button type="submit"
+                                    class="group relative flex w-full justify-center rounded-lg bg-gradient-to-r from-brand-primary to-brand-secondary px-4 py-3 text-sm font-semibold text-white hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all hover:scale-[1.02] shadow-lg shadow-brand-primary/20">
+                                    Sign in
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/script.js"></script>
+    <!-- Notification Container -->
+    <div id="notification-container" class="notification-container"></div>
+</body>
+
+</html>
